@@ -3,7 +3,10 @@ const app = new Koa();
 
 app.use((ctx, next) => {
     console.log(1);
-    next();
+    const started = new Date();
+    next().then(() => {
+        console.log(new Date() - started + 'ms');
+    });
 });
 
 app.use((ctx, next) => {
