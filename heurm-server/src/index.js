@@ -1,21 +1,15 @@
 const Koa = require('koa');
+const Router = require('koa-router');
+
 const app = new Koa();
+const router = new Router();
 
-app.use(async (ctx, next) => {
-    console.log(1);
-    const started = new Date();
-    await next();
-    console.log(new Date() - started + 'ms');
+router.get('/', (ctx, next) => {
+    ctx.body = 'Home';
 });
 
-app.use((ctx, next) => {
-    console.log(2);
-    next();
-});
-
-app.use(ctx => {
-    ctx.body = 'Hello, Koa!';
-});
+app.use(router.routes());
+app.use(router.allowedMethods());
 
 app.listen(3000, () => {
     console.log('heurm server is listening to port 3000');
