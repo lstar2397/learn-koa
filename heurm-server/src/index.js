@@ -8,6 +8,7 @@ const router = new Router();
 const api = require('./api');
 
 const mongoose = require('mongoose');
+const bodyParser = require('koa-bodyparser');
 
 mongoose.Promise = global.Promise;
 mongoose.connect(process.env.MONGO_URI).then((res) => {
@@ -18,8 +19,9 @@ mongoose.connect(process.env.MONGO_URI).then((res) => {
 
 const port = process.env.PORT || 3000;
 
+app.use(bodyParser());
 router.use('/api', api.routes());
-
+    
 app.use(router.routes());
 app.use(router.allowedMethods());
 
