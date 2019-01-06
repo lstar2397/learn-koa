@@ -1,8 +1,4 @@
 {
     "editor.formatOnSave": true,
-    "prettier.eslintIntegration": true,
-    "path-autocomplete.pathMappings": {
-        "$root": "${folder}/src"
-    },
-    "path-autocomplete.includeExtension": false
+    "prettier.eslintIntegration": true
 }
