@@ -8,7 +8,7 @@ const Author = new Schema({
 
 const Book = new Schema({
     title: String,
-    author: [Author],
+    authors: [Author],
     publishedDate: Date,
     price: Number,
     tags: [String],
@@ -16,6 +16,6 @@ const Book = new Schema({
         type: Date,
         default: Date.now
     }
-}); 
+});
 
 module.exports = mongoose.model('Book', Book);
