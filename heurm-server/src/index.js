@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const Koa = require('koa');
 const Router = require('koa-router');
 
@@ -5,11 +7,22 @@ const app = new Koa();
 const router = new Router();
 const api = require('./api');
 
+const mongoose = require('mongoose');
+
+mongoose.Promise = global.Promise;
+mongoose.connect(process.env.MONGO_URI).then((res) => {
+    console.log('Successfully connected to mongodb');
+}).catch(e => {
+    console.error(e);
+});
+
+const port = process.env.PORT || 3000;
+
 router.use('/api', api.routes());
 
 app.use(router.routes());
 app.use(router.allowedMethods());
 
-app.listen(3000, () => {
-    console.log('heurm server is listening to port 3000');
+app.listen(port, () => {
+    console.log('heurm server is listening to port ' + port);
 });
