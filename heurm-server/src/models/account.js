@@ -41,4 +41,42 @@ const Account = new Schema({
     }
 });
 
+Account.statics.findByUsername = function(username) {
+    return this.findOne({
+        'profile.username': username
+    }).exec();
+};
+
+Account.statics.findByEmail = function(email) {
+    return this.findOne({ email }).exec();
+};
+
+Account.statics.findByEmailOrUsername = function({ username, email }) {
+    return this.findOne({
+        $or: [
+            {
+                'profile.username': username
+            },
+            { email }
+        ]
+    }).exec();
+};
+
+Account.statics.localRegister = function({ username, email, password }) {
+    const account = new this({
+        profile: {
+            username
+        },
+        email,
+        password: hash(password)
+    });
+
+    return account.save();
+};
+
+Account.methods.validatePassword = function(password) {
+    const hashed = hash(password);
+    return this.password === hashed;
+};
+
 module.exports = mongoose.model('Account', Account);
