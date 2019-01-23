@@ -121,3 +121,14 @@ exports.logout = async ctx => {
     });
     ctx.body = 'logout';
 };
+
+exports.check = (ctx) => {
+    const { user } = ctx.request;
+
+    if (!user) {
+        ctx.status = 403;
+        return;
+    }
+
+    ctx.body = user.profile;
+};

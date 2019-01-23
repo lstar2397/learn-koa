@@ -9,6 +9,7 @@ const api = require('./api');
 
 const mongoose = require('mongoose');
 const bodyParser = require('koa-bodyparser');
+const { jwtMiddleware } = require('./lib/token');
 
 mongoose.Promise = global.Promise;
 mongoose
@@ -26,6 +27,7 @@ mongoose
 const port = process.env.PORT || 3000;
 
 app.use(bodyParser());
+app.use(jwtMiddleware);
 router.use('/api', api.routes());
 
 app.use(router.routes());
